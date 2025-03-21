@@ -19,6 +19,7 @@ public class AppConfig {
 		ds.setUrl("jdbc:mysql://localhost:3306/kcy");
 		return ds;
 	}
+	
 	@Bean
 	public JdbcTemplate jdbc(DataSource dataSource) {
 		return new JdbcTemplate(dataSource);
@@ -31,7 +32,5 @@ public class AppConfig {
  		스프링 프레임워크에서 빈 등록, 의존성 주입, 환경설정을 관리하는 방법
  		
  		스프링 프레임워크에서 설정하는 방법은 xml, java기반, annotation 기반이 있다.
- 
- 
  
  */
