@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Insert title here</title>
+
 </head>
 <body>
 	<style> .aa{ color:brown;}
@@ -28,13 +29,16 @@
 	</p>
 	<button th:unless="${age < 20}">미성년자는 나가세요</button>
 	
-	<div th:switch="${name }">
+	<div th:switch="${name}">
 		<p th:case="김명준"> 은호왈, 그만좀 먹을거 가져와</p> <!-- th는 꼭 html의 태그와 함께 써야함 프론트개발자와 함께 쓰는거라 태그이외의 기능은 넣지 않음 -->
 		<p th:case="이정훈"> 은호왈, 점심머 먹을까?</p>
 		<p th:case="곽찬양"> 은호왈, 누구신지...?</p> <!-- {name}이 곽찬양이니까 곽찬양인 얘만 실행 -->
 	</div>
 	
-	<form th:object="${user}" method="get" action="/testSave"><!--object는 객체를 표현 input태그에 id,name,value를 다 넣어줌. object는 *과함께변수이름 쓰기 "*{변수}-->
+	<form th:object="${user}" method="get" action="/testSave">
+	<!-- form태그 : 사용자가 데이터를 입력하고 제출할 수 있는 양식 -->
+	<!-- th:object="${user}" : thymeleaf의 속성으로 ${user}라는 모델객체를 폼의 데이터 바인딩 대상 객체로 설정 -->
+	<!--object는 객체를 표현 input태그에 id,name,value를 다 넣어줌. object는 *과함께변수이름 쓰기 "*{변수}-->
 	
 		아이디 : <input type="text" th:field="*{id}"><br>
 		이름 : <input type="text" th:field="*{name}"><br>
@@ -128,7 +132,12 @@
 			<div>			
 		</div>
 		
+		클래스 나누는 이유 : 클래스 하나에 다 만들면 예를들어 게시글 작성시에는 작성자,제목,조회수,내용 등등을 적지만 뷰페이지(게시글목록)에는 제목, 번호, 작성자만 있으면 되는데
+		데이터를 계속 모두 쓰니까 공간 낭비
+		
 		타임리프 내부 주석 <!--/*  */-->
+		
+		
 		
  -->
 

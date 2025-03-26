@@ -1,11 +1,26 @@
 @charset "UTF-8";
+@import url('https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Noto+Sans:ital,wght@0,100..900;1,100..900&family=Red+Hat+Display:ital,wght@0,300..900;1,300..900&display=swap');
 
 *{
 	margin:0;
 	padding:0;
 	box-sizing: border-box;
+	
 }
 
+ul{
+	list-style: none;
+}
+
+a{
+	text-decoration: none;
+	color: inherit;
+}
+
+input{
+	outline:none;
+	padding: 5px 10px;
+}
 #wrap{
 	width: 1000px;
 	margin: 0 auto;
@@ -14,9 +29,30 @@
 #header{
 	width:100%;
 	position: sticky;
+	padding: 15px 0;
+	top: 0; /* sticky는 statci+fixed특징 다 가짐 > x나y위치값이 설정한 위치도달전은 static, 도달이후는 fixed처럼 행동 > 얘사용할때는 top,bottom,right,left중 하나가 반드시 필요(기준위치)*/
+	background: #fff;
 }
 
 #menuList{
 	width:100%;
 	display:flex;
+	align-items: center;
 }
+
+#menuList .menu{
+	width:20%;
+	text-align: center;
+}
+
+#menuList .menu a{
+	display: block;
+	width:80%; padding: 10px 0;
+	margin: 0 10%;
+}
+
+#menuList .menu a:hover{
+	background: #3cb371;
+	color: #eee;
+}
+

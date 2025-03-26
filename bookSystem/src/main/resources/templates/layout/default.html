@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>온라인 도서관</title>
+
+<link rel="stylesheet" href="./css/default.css">
+
+<th:block layout:fragment="css"></th:block> <!-- fragment는 조각임 > 퍼즐생각해보세요(조각마다 이름을 부여해서(css,script) th:block에 넣어주겠다. 들어올 위치도 정해준것(html은 그냥써주는건데 th는 위치를 정해준다)-->
+<th:block layout:fragment="script"></th:block>
+</head>
+<body>
+	
+	<div id="wrap">
+		<th:block th:replace="layout/header :: head"></th:block>
+		
+		<th:block layout:fragment="main"></th:block>
+		
+		<th:block th:replace="layout/footer :: foot"></th:block>
+	</div>
+	
+	
+	
+</body>
+</html>
+
+<!-- 
+	thymeleaf에서 jsp include와 같은 방법
+	
+	th:replace(대체)  ,		th:include(포함)
+	태그자체를 대체해서 들어감		태그안으로 삽입됨
+	태그사라짐					태그남아있음
+	
+	<div th:replace="~{aa.html}" > </div> 하면
+	<div>태그는 사라지고 그 자리에 aa.html내용으로 대체된다.
+	
+	<div th:include="~{bb.html}" > </div>
+	하면 div태그 안에 bb.html이 삽입된다.
+	
+	aa와 bb는 fragment의 이름이다. aa.html에 가서 aa의 fragment를 만들어야함
+	
+	th:layout은 많은 페이지의 틀이 똑같을때 사용 > 모두다 다른페이지라면 사용xx 
+ -->
