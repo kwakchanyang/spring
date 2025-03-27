@@ -20,7 +20,7 @@
 
 </head>
 	<div layout:fragment="main" id="main">
-		<div id="loginWrap">
+		<div th:if="${session.user==null}" id="loginWrap"> <!--session객체에 user가 있냐를 따짐 if가 화면에 표시가 되려면 조건이 참이어야 함!!  --> 
 			<div class="login-box">
 				<div class="login-area">
 					<form name="loginFm" id="loginFm" th:object="${memberDto}" method="post" action="/signIn">

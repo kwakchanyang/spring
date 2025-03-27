@@ -9,9 +9,13 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import com.bookSystem.DTO.BookListDto;
+import com.bookSystem.DTO.BookSearchDto;
 import com.bookSystem.DTO.MemberDto;
 import com.bookSystem.Service.BookService;
 import com.bookSystem.Service.MemberService;
+
+import jakarta.servlet.http.HttpSession;
 
 @Controller
 public class MainController {
@@ -32,24 +36,55 @@ public class MainController {
 	}
 	
 	@PostMapping("/signIn") // ┌객체를 아예 위에서 보내놔서 아이디,비번입력하고 로그인 버튼누르면 객체에 알아서 저장이되서 그냥 가져오면됨
-	public String login(MemberDto memberDto ,Model model) { // 원래는 로그인하면 주소가 localhost/signin으로 바뀌지만 
+	public String login(MemberDto memberDto ,HttpSession session, Model model) { // 원래는 로그인하면 주소가 localhost/signin으로 바뀌지만 
 		System.out.println(memberDto.getEmail());
 		
-		// Model model이게 컨트롤러에서 나온 데이터를 담고서 뷰(index.html)로 보내줌 
+		// Model model이게 컨트롤러에서 나온 데이터를 담고서 뷰(index.html)로 보내줌 >
 		// 로그인처리를 진행하려면 service의 메서드를 호출한다.
 		// member와 관련된 것은 MemberService에서 처리한다.
 		// 컨트롤 쪽에서는 로그인처리과정이 어떻게 진행되고 하는지 전혀 몰라도 된다.
 		// 그냥 service쪽 메서드를 호출하면 된다.
 		boolean isSuccess = memberService.signIn(memberDto);
 		
-		if(isSuccess) {
-			
+		if(isSuccess) { // 로그인 성공시 동작
+			session.setAttribute("user", memberDto.getEmail()); // 로그인성공한다면 session에 user가 존대한다.
 			return "redirect:/"; // 이 주소로 변경해서 재요청해라 > 위의 GetMapping("/")동작함 > 로그인눌러도 localhost뜸
 		}
 		// 로그인 실패시 index.html 다시 돌아가기
-		model.addAttribute("fail",1); // fail안에 null아니면 1이 들어감. fail은 model이라는 객체안에 들어있은 데이터임
+		model.addAttribute("fail",1); // fail안에 null아니면 1이 들어감. 지금은 fail의 존재유무만 중요하지 1이 중요한게 아님 ...fail은 model이라는 객체안에 들어있은 데이터임
 		return "index";
 	}
+	
+	
+	@GetMapping("/logout")
+	public String logout(HttpSession session) {
+		
+		session.removeAttribute("user");
+		return "redirect:/";
+	}
+	
+	// 도서 검색 부분
+	@GetMapping("/bookSearch")
+	public String search(Model model) { // 도서검색 페이지 요청
+		
+		model.addAttribute("bookSearchDto", new BookSearchDto());
+		
+		return "book/search"; // 주소요청들어왔으니 페이지를 제공
+	}
+	
+	@GetMapping("/bookSearch/result") // 검색어 입력하여 요청시
+	public String searchResult( BookSearchDto bookSearchDto, Model model) {
+		
+		List<BookListDto> bookListDtos = bookService.bookSearch(bookSearchDto); // service에 넘겨야 얘가 알아서함. 결과를 받을 애를 만듦(List)
+		
+		model.addAttribute("bookListDtos",bookListDtos);
+		
+		return "book/search";
+	}
+	
+	
+	
+	
 	
 	
 	
