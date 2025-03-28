@@ -15,10 +15,10 @@ public class BookWriteDto {
 	
 	public static BookWriteDto of(Book book) { // 이메서드는 Book엔티티 > BookWriteDto로 변환 / DB에서 가져온 Book데이터를 가공해서 DTO로 만들어주는 역할
 		BookWriteDto bookWriteDto = new BookWriteDto();
-		bookWriteDto.setBookAuthor(book.getBookAuthor());
-		bookWriteDto.setBookPublishing(book.getBookPublishing());
-		bookWriteDto.setBookTitle(book.getBookTitle());
-		bookWriteDto.setBookYear(book.getBookYear());
+		bookWriteDto.setBookAuthor(book.getBook_author());
+		bookWriteDto.setBookPublishing(book.getBook_publishing());
+		bookWriteDto.setBookTitle(book.getBook_title());
+		bookWriteDto.setBookYear(book.getBook_year());
 		
 		return bookWriteDto;
 	}

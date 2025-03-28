@@ -9,5 +9,8 @@ public interface MemberRepository { // 추상메서드는 내용이없잖아 > �
 
 	public String login(MemberDto memberDto);
 
+	
+	// 로그인한 회원의 이메일을 통해 id 구하기
+	public int findByEmail(String email);
 
 }

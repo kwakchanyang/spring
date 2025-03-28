@@ -5,7 +5,19 @@
 <head>
 
 <th:block layout:fragment="css"></th:block> 
-<th:block layout:fragment="script"></th:block>
+<th:block layout:fragment="script">
+	<script th:inline="javascript">
+			window.onload = function()	{
+				const input = document.getElementById("keyword");
+				input.addEventListener('keydown',function(event){ // 매개변수event를 넣으면 키도드가 눌렸을때 무엇인지가 저장됨
+					if(event.key==='Enter'){
+						alert("엔터키");
+					}
+				});
+			}
+	</script>
+
+</th:block>
 
 </head>
 	<div layout:fragment="main" id="main">
@@ -25,6 +37,33 @@
 				<br>
 			</form>
 		</div>
+		
+		<br><br><hr><br><br>
+		<table>
+			<thead>
+				<tr>
+					<th>번호</th><th>제목</th><th>저자</th><th>출판사</th>
+				</tr>	
+			</thead>
+			<tbody>
+			
+				<tr th:each="row , stat: ${bookListDtos}">
+					<td th:text="${stat.count}"></td>
+					
+					<td ><!-- a태그는 로그인했을때만 적용되게 하기위해 -->
+						<a th:href="${ session.user==null ? '' : '/basket?bookId='+row.bookId }" 
+						th:text="${row.bookTitle}"></a>
+					</td>
+					
+					
+					<td th:text="${row.bookAuthor}"></td>
+					<td th:text="${row.bookPublishing}"></td>
+				</tr>
+			
+			</tbody>
+			
+		
+		</table>
 		
 	</div>
 </html>
