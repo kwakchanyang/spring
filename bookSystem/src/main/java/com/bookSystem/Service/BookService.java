@@ -11,9 +11,11 @@ import org.springframework.ui.Model;
 
 import com.bookSystem.DTO.BookBasketDto;
 import com.bookSystem.DTO.BookListDto;
+import com.bookSystem.DTO.BookLoanDto;
 import com.bookSystem.DTO.BookSearchDto;
 import com.bookSystem.DTO.BookWriteDto;
 import com.bookSystem.Entity.Book;
+import com.bookSystem.Entity.BookUse;
 import com.bookSystem.Entity.MyBasket;
 import com.bookSystem.Repository.BookRepository;
 import com.bookSystem.Repository.MemberRepository;
@@ -88,13 +90,40 @@ public class BookService {
 	}
 	
 	// 대여 메뉴 클릭하면 
-	public void loanSave(int id, int bookId, String email) {
-		bookRepository.deleteBasket(id);
-		
-		Map<String, Integer> info = new HashMap<>();
-		info.put("mid", memberRepository.findByEmail(email));
-		info.put("bid", bookId);
-		
-		bookRepository.loanInsert(info);
+	public boolean loanSave(int id, int bookId, String email) {
+		boolean hasLoan = bookRepository.loanCheck(bookId);
+		if( hasLoan) return true;
+			bookRepository.deleteBasket(id);
+			
+			Map<String, Integer> info = new HashMap<>();
+			info.put("mid", memberRepository.findByEmail(email));
+			info.put("bid", bookId);
+			
+			bookRepository.loanInsert( info );
+		return false;
 	}
-}
+
+	public List<BookLoanDto> myLoanList(String email) {
+		
+		List<BookLoanDto> list = new ArrayList<>();
+		
+		int memberId = memberRepository.findByEmail(email);
+		
+		List<BookUse> bookUses = bookRepository.findByMyLoan(memberId);
+		for(BookUse bookUse : bookUses) {
+			Book book = bookRepository.findById(bookUse.getBook_id());
+			BookLoanDto bookLoanDto = BookLoanDto.of(bookUse, book);
+			list.add(bookLoanDto);
+		}		
+		
+		return list;
+	}
+
+	public void returnEx(int id) {
+		
+		bookRepository.returnUpdate(id);
+		
+	}
+		
+	}
+

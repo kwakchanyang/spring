@@ -8,10 +8,14 @@
 <th:block layout:fragment="script"></th:block>
 
 </head>
-	<div layout:fragment="main" id="main">
 	
 	
-		<h1> 도서 대여 하기</h1>
+	
+	<div layout:fragment="main"  id="main">
+		<th:block th:if="${fail}">
+			<script>alert("대여중인 도서입니다.");</script>
+		</th:block>
+		<h1> 도서 대여 하기 </h1>
 		<h4> 대여 버튼을 클릭하세요</h4>
 		
 		<br>

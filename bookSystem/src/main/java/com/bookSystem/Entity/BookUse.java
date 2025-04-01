@@ -17,15 +17,5 @@ public class BookUse {
 	private LocalDate loan_date;
 	private LocalDate return_date;
 	
-	public static BookUse of(BookReturnDto bookReturnDto) {
-		BookUse bookUse = new BookUse();
-		bookUse.setMember_id(bookReturnDto.getMember_id());
-		bookUse.setBook_id(bookReturnDto.getBook_id());
-		bookUse.setStatus(bookReturnDto.getStatus());
-		bookUse.setLoan_date(bookReturnDto.getLoan_date());
-		bookUse.setReturn_date(bookReturnDto.getReturn_date());
-		
-		return bookUse;
-	}
 
 }

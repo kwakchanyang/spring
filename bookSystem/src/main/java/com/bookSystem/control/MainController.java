@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.bookSystem.DTO.BookBasketDto;
 import com.bookSystem.DTO.BookListDto;
+import com.bookSystem.DTO.BookLoanDto;
 import com.bookSystem.DTO.BookSearchDto;
 import com.bookSystem.DTO.MemberDto;
 import com.bookSystem.Service.BookService;
@@ -110,20 +111,42 @@ public class MainController {
 		return "book/loan";
 	}
 	
-	// ?/
+	//대출 저장 및 찜 목록에서 삭제
 	@GetMapping("/loanSave")
-	public String loanSave(@RequestParam("id") int id,
-			@RequestParam("bookId") int bookId, HttpSession session) {
-		
+	public String loanSave(@RequestParam("id") int id, 
+			@RequestParam("bookId") int bookId, HttpSession session,Model model) {
 		String email = (String)session.getAttribute("user");
-		bookService.loanSave(id, bookId, email);
-		
-		
+		boolean hasLoan =bookService.loanSave(id,bookId, email);
+		if(hasLoan) {
+			List<BookBasketDto> basketList = bookService.myBasketList( email );
+			
+			model.addAttribute("basketList", basketList );
+			model.addAttribute("fail",1);	
+			return "book/loan";
+		}
 		return "redirect:/loans";
+	}
+	
+	@GetMapping("/return")
+	public String returnPage(Model model , HttpSession session) {
+		String email = (String)session.getAttribute("user");
 		
+		List<BookLoanDto> list = bookService.myLoanList( email );
+		
+		model.addAttribute("loanList",list);
+		return "book/return";
 	}
 	
 	
+	@GetMapping("/returnExecute")
+	public String returnExe(@RequestParam int id) {
+		
+		bookService.returnEx(id);
+		
+		return "redirect:/return";
+	}
+	
+	 
 	
 	
 //	@GetMapping("/test") //얘가 주소지 return이 주소가 아님

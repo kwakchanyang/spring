@@ -1,33 +1,45 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" 
-	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-	  layout:decorate="~{layout/default}">
-<head>
-
-<th:block layout:fragment="css"></th:block> 
-<th:block layout:fragment="script"></th:block>
-
-</head>
-	<div layout:fragment="main" id="main">
-	
-	
-		<h1> 도서 반납 하기</h1>
-		<h4> 반납 버튼을 클릭하세요</h4>
-		
-		<br>
-		<table>
-			<tr>
-				<th>제목</th><th>저자</th>
-				<th >반납</th>
-			</tr>
-			
-			<tr th:each="row : ${basketList}">
-				<td th:text="${row.book_title}"></td>
-				<td th:text="${row.book_author}"></td>
-				<td style="width:120px; text-align: center;">
-					<a th:href="'/loanSave?id='+${row.id}+'&bookId='+${row.book_id}">반납</a>
-				</td>
-			</tr>
-		</table>
-	</div>
-</html>
+ <html xmlns:th="http://www.thymeleaf.org"
+ 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+ 	layout:decorate="~{layout/default}">
+ 	
+ 	<head>
+ 	<th:block layout:fragment="css"></th:block>
+ 	<th:block layout:fragment="script"></th:block>
+ 	<style>
+ 		table {
+ 			width: 100%;
+ 		}
+ 	</style>
+ 	</head>	
+ 		
+ 		<div layout:fragment="main" id="main">
+ 		<table>
+ 			<thead>
+ 				<tr>
+ 					<th>제목</th>
+ 					<th>저자</th>
+ 					<th>상태</th>
+ 					<th>대여일자</th>
+ 					<th>반납일자</th>
+ 					<th>반납하기</th>
+ 				</tr>
+ 			</thead>
+ 			<tbody>
+ 				<tr th:each="book : ${loanList}" th:object="${book}">
+ 					<td th:text="*{book_title}"></td>
+ 					<td th:text="*{book_author}"></td>
+ 					<td th:text="*{status}"></td>
+ 					<td th:text="*{loan_date}"></td>
+ 					<td th:text="*{return_date}"></td>
+ 					<td>
+ 						<a th:href="'/returnExecute?id='+${book.id}">반납하기</a>
+ 					</td>
+ 				</tr>
+ 				
+ 			</tbody>
+ 		</table>
+ 		
+ 		
+ 		</div>
+ </html>

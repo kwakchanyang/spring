@@ -34,26 +34,46 @@
 	
 	<!-- BookRepository 보면서  -->
 	<insert id="basketSave" >
-		insert into mybasket(member_id , book_id)
-		values( #{mid} , #{bid})
+		insert into mybasket(member_id , book_id )
+		values( #{mid}  , #{bid}  )
 	</insert>
 	
 	<select id="selectBasket" parameterType="int"
-		resultType="com.bookSystem.Entity.MyBasket">
+	   resultType="com.bookSystem.Entity.MyBasket">
 		select * from mybasket where member_id=#{memberId}
+	
 	</select>
 	
-	<select id="findById" parameterType="int"
+	<select id="findById" parameterType="int"  
 	resultType="com.bookSystem.Entity.Book">
 		select * from book where book_id=#{bookId}
-	
 	</select>
-	
-	
-	
-	<insert id="ReturnSave">
-		insert into book_user(member_id, book_id) values( #{mid}, #{bid})
+
+	<select id="loanCheck" parameterType="int" resultType="boolean">
+		select case when count(*) > 0 then true else false end 
+		from book_use 
+		where book_id=#{bookId} 
+		and status='대출'
+	</select>
+
+	<delete id="deleteBasket" parameterType="int">
+		delete from mybasket where id=#{id}
+	</delete>
+	<insert id="loanInsert">
+		insert into book_use(member_id, book_id, status, loan_date)
+		values( #{mid}, #{bid}, '대출', now() )
 	</insert>
+	<select id="findByMyLoan" parameterType="int" 
+	resultType="com.bookSystem.Entity.BookUse">
+		select * from book_use 
+		where member_id = #{memberId}
+		and status='대출'
+	</select>
+	<update id="returnUpdate" parameterType="int">
+		update book_use set status='반납' , return_date=now() 
+		where id=#{id}
+	</update>
+	
 	
 	
 </mapper>
