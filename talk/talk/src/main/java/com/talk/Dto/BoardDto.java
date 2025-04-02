@@ -13,7 +13,7 @@ public class BoardDto {
 	private String content;
 	private String fileName;
 	
-	public static BoardEntity to(BoardDto boardDto) {
+	public static BoardEntity to(BoardDto boardDto) { // dto -> entity
 		BoardEntity boardEntity = new BoardEntity();
 		boardEntity.setId(boardDto.getId());
 		boardEntity.setTitle(boardDto.getTitle());
@@ -21,7 +21,7 @@ public class BoardDto {
 		boardEntity.setFileName(boardDto.getFileName());
 		return boardEntity;
 	}
-	public static BoardDto from(BoardEntity boardEntity) {
+	public static BoardDto from(BoardEntity boardEntity) { // entity -> dto
 		BoardDto boardDto = new BoardDto();
 		boardDto.setId(boardDto.getId());
 		boardDto.setTitle(boardEntity.getTitle());
