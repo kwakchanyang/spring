@@ -4,4 +4,11 @@
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
  
  <mapper namespace="com.talk.Repository.CommentRepository">
+ 
+ <select id="findByBoardIdOrderByDesc" parameterType="int"
+ resultType="CommentEntity">
+ 	
+ 	select * from comment where board_id = #{id} order by id desc
+ 
+ </select>
  </mapper>

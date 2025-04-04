@@ -14,14 +14,15 @@ public class BoardListDto {
 	private String title;
 	private String memberId;
 	private int hit;
-	private LocalDate wirteDate;
+	private LocalDate writeDate;
 	
 	public static BoardListDto from(BoardEntity boardEntity) {
 		BoardListDto boardListDto = new BoardListDto();
 		boardListDto.setTitle(boardEntity.getTitle());
 		boardListDto.setMemberId(boardEntity.getMemberId());
 		boardListDto.setHit(boardEntity.getHit());
-		boardListDto.setWirteDate(boardEntity.getWriteDate());
+		boardListDto.setWriteDate(boardEntity.getWriteDate());
+		boardListDto.setId(boardEntity.getId());
 		return boardListDto;
 	}
 }
