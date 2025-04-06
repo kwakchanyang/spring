@@ -23,7 +23,7 @@ public class BoardDto {
 	}
 	public static BoardDto from(BoardEntity boardEntity) { // entity -> dto
 		BoardDto boardDto = new BoardDto();
-		boardDto.setId(boardDto.getId());
+		boardDto.setId(boardEntity.getId());
 		boardDto.setTitle(boardEntity.getTitle());
 		boardDto.setContent(boardEntity.getContent());
 		boardDto.setFileName(boardEntity.getFileName());

@@ -16,6 +16,7 @@ import com.talk.Dto.BoardDto;
 import com.talk.Dto.BoardListDto;
 import com.talk.Dto.CommentDto;
 import com.talk.service.BoardService;
+import com.talk.service.CommentService;
 
 import jakarta.servlet.http.HttpSession;
 
@@ -25,6 +26,9 @@ public class BoardController {
 
 	@Autowired
 	private BoardService boardService;
+	
+	@Autowired
+	private CommentService commentService;
 	
 	// 게시판 목록 페이지 요청
 	@GetMapping("/index")
@@ -95,9 +99,11 @@ public class BoardController {
 		return "board/boardWrite";
 	}
 	// 댓글 저장 요청
-	@GetMapping("/commentSave")
+	@ PostMapping("/commentSave")
 	public String commentSave(CommentDto commentDto, HttpSession session) {
-		return null;
+		String memberId = (String) session.getAttribute("user");
+		commentService.commentSave(commentDto, memberId);
+		return "redirect:/board/detail?id=" + commentDto.getBoardId();
 	}
 	// 댓글 삭제 요청
 	@GetMapping("/commentDelete")

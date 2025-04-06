@@ -39,7 +39,7 @@
             </div>
             <div id="commentBox" class="text-light">
                 <div id="commentWriteBox">
-                    <form th:object="${commentDto}" method="get" action="">
+                    <form th:object="${commentDto}" method="post" action="/board/commentSave">
                         <div id="commentWrite" class="flex flex-align-center">
                             <input type="hidden" th:field="*{boardId}">
                             <div class="flex flex-align-center cInput">
